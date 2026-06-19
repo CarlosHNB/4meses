@@ -1,0 +1,351 @@
+/* ============================================================
+   NÓS. — Carousel & Slide Styles  (v5 mobile-first)
+   ============================================================ */
+
+/* ============================================================
+   SLIDE STRUCTURE
+   ============================================================ */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.85s cubic-bezier(0.77, 0, 0.18, 1),
+    transform 0.85s cubic-bezier(0.77, 0, 0.18, 1),
+    filter 0.85s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: scale(1);
+  filter: blur(0px);
+  z-index: 10;
+}
+
+.slide.enter-from-next  { transform: scale(1.04) translateX(3%);  filter: blur(8px); }
+.slide.enter-from-prev  { transform: scale(1.04) translateX(-3%); filter: blur(8px); }
+.slide.exit-to-prev     { opacity: 0; transform: scale(0.96) translateX(-3%); filter: blur(8px); z-index: 5; }
+.slide.exit-to-next     { opacity: 0; transform: scale(0.96) translateX(3%);  filter: blur(8px); z-index: 5; }
+
+/* ============================================================
+   BACKGROUND (desfocado, tela inteira, Ken Burns)
+   ============================================================ */
+.slide-bg {
+  position: absolute;
+  inset: -3%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.06);
+  filter: brightness(0.22) saturate(0.6) blur(3px);
+}
+
+.slide.active .slide-bg {
+  animation: kenBurns 14s ease-in-out infinite alternate;
+}
+
+@keyframes kenBurns {
+  0%   { transform: scale(1.06) translate(0%,    0%); }
+  33%  { transform: scale(1.10) translate(-1%,  0.5%); }
+  66%  { transform: scale(1.08) translate(0.5%, -0.5%); }
+  100% { transform: scale(1.06) translate(-0.5%, 0.5%); }
+}
+
+/* ============================================================
+   OVERLAY (gradiente cinematográfico)
+   ============================================================ */
+.slide-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top,
+      rgba(8,8,8,0.97)  0%,
+      rgba(8,8,8,0.55)  28%,
+      rgba(8,8,8,0.10)  55%,
+      rgba(8,8,8,0.08) 100%),
+    linear-gradient(to right,
+      rgba(8,8,8,0.45) 0%,
+      transparent      22%,
+      transparent      78%,
+      rgba(8,8,8,0.45) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ============================================================
+   PHOTO CONTAINER
+   ============================================================ */
+.slide-photo-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Camada 1 — fundo desfocado (tela cheia, mesma cor da foto) */
+.slide-photo-bg {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  object-position: center;
+  filter: blur(24px) brightness(0.3) saturate(0.65);
+  transform: scale(1.05);
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.slide-photo-bg.loaded { opacity: 1; }
+
+/* Camada 2 — foto principal, centralizada, proporcional */
+.slide-photo {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+  box-shadow:
+    0 30px 90px rgba(0,0,0,0.75),
+    0 8px 24px  rgba(0,0,0,0.55),
+    0 0 0 1px   rgba(255,255,255,0.04);
+  border-radius: 3px;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.slide-photo.loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Portrait — limita largura pra não esticar */
+.slide-photo.portrait {
+  max-height: 86vh;
+  max-width: min(60vw, 480px);
+}
+
+/* Landscape — ocupa mais largura */
+.slide-photo.landscape {
+  max-height: 80vh;
+  max-width: 95vw;
+}
+
+/* Square */
+.slide-photo.square {
+  max-height: 80vh;
+  max-width: min(80vh, 80vw);
+}
+
+/* ============================================================
+   PLACEHOLDER (quando não há foto)
+   ============================================================ */
+.slide-photo-placeholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1a1a1a 0%, #252525 50%, #1a1a1a 100%);
+  background-size: 400% 400%;
+  animation: shimmer 3s ease infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: rgba(255,255,255,0.2);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+}
+
+.slide-photo-placeholder .ph-icon { font-size: 2.2rem; opacity: 0.3; }
+.slide-photo-placeholder .ph-text {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.3;
+}
+
+@keyframes shimmer {
+  0%,100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* ============================================================
+   SLIDE CONTENT (bloco de texto — rodapé)
+   ============================================================ */
+.slide-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  /* Mobile: padding inferior generoso para não sobreposição com UI */
+  padding: 2.5rem 1.4rem 7.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity  0.8s ease 0.35s,
+    transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.35s;
+}
+
+.slide.active .slide-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Data */
+.slide-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: rgba(201,168,76,0.85);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+/* Divisor dourado */
+.slide-divider {
+  width: 36px;
+  height: 1px;
+  background: linear-gradient(to right, rgba(201,168,76,0.7), transparent);
+}
+
+/* Título */
+.slide-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.45rem, 5.5vw, 2.6rem);
+  font-weight: 400;
+  font-style: italic;
+  color: #FDF8F0;
+  line-height: 1.18;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.6);
+}
+
+.slide-title strong { font-weight: 600; color: #fff; }
+
+/* Mensagem */
+.slide-message {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.8rem, 3vw, 0.94rem);
+  font-weight: 300;
+  color: rgba(253,248,240,0.72);
+  line-height: 1.68;
+  max-width: 480px;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+}
+
+/* ============================================================
+   TAG (topo central)
+   ============================================================ */
+.slide-tag {
+  position: absolute;
+  top: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  background: rgba(10,10,10,0.55);
+  border: 1px solid rgba(201,168,76,0.22);
+  padding: 0.3rem 0.9rem;
+  border-radius: 30px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.25s;
+}
+
+.slide.active .slide-tag { opacity: 1; }
+
+/* ============================================================
+   NÚMERO DO SLIDE (topo direito) — só desktop
+   ============================================================ */
+.slide-number {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 20;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.22);
+  letter-spacing: 0.2em;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.5s;
+}
+
+.slide.active .slide-number { opacity: 1; }
+
+/* ============================================================
+   SPARKLES no slide
+   ============================================================ */
+.slide-sparkle {
+  position: absolute;
+  z-index: 15;
+  pointer-events: none;
+  animation: sparkleAnim 2s ease-in-out infinite;
+}
+
+@keyframes sparkleAnim {
+  0%,100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  50%      { opacity: 1; transform: scale(1)   rotate(180deg); }
+}
+
+/* ============================================================
+   DESKTOP (≥ 768px) — ajustes maiores
+   ============================================================ */
+@media (min-width: 768px) {
+  .slide-content {
+    padding: 3rem 4rem 5.5rem;
+    gap: 0.75rem;
+  }
+
+  .slide-tag { top: 1.75rem; font-size: 0.65rem; padding: 0.35rem 1rem; }
+  .slide-number { top: 2rem; right: 2rem; }
+
+  .slide-photo.portrait  { max-height: 88vh; max-width: min(52vw, 500px); }
+  .slide-photo.landscape { max-height: 84vh; max-width: 92vw; }
+  .slide-photo.square    { max-height: 82vh; max-width: min(82vh, 75vw); }
+}
+
+/* ============================================================
+   MOBILE PEQUENO (≤ 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  .slide-content { padding: 2rem 1.1rem 8rem; gap: 0.5rem; }
+
+  .slide-photo.portrait  { max-width: 90vw;  max-height: 70vh; }
+  .slide-photo.landscape { max-width: 98vw;  max-height: 62vh; }
+  .slide-photo.square    { max-width: 88vw;  max-height: 62vh; }
+
+  /* Número do slide some no mobile pequeno */
+  .slide-number { display: none; }
+}

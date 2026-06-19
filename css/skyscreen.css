@@ -1,0 +1,418 @@
+/* ============================================================
+   NÓS. — skyscreen.css
+   Tela do céu: layout, painel lateral, botões, animações
+   ============================================================ */
+
+/* ============================================================
+   BOTÃO "VER O CÉU" — dentro do slide-content, após o texto
+   ============================================================ */
+.sky-trigger-btn {
+  position: static;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(8, 10, 30, 0.55);
+  backdrop-filter: blur(18px) saturate(1.8);
+  -webkit-backdrop-filter: blur(18px) saturate(1.8);
+  border: 1px solid rgba(100, 140, 255, 0.35);
+  color: rgba(180, 210, 255, 0.9);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.35rem;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 0.35rem;
+  /* bom tap target no mobile */
+  min-height: 44px;
+
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.8s ease 0.8s,
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s,
+    background 0.3s,
+    border-color 0.3s,
+    color 0.3s,
+    box-shadow 0.3s;
+}
+
+.slide.active .sky-trigger-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sky-trigger-btn:hover {
+  background: rgba(20, 30, 80, 0.75);
+  border-color: rgba(120, 170, 255, 0.65);
+  color: #C8DCFF;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow:
+    0 8px 30px rgba(60, 100, 220, 0.25),
+    0 0 20px rgba(80, 130, 255, 0.15),
+    inset 0 1px 0 rgba(255,255,255,0.07);
+}
+
+.sky-trigger-btn:active { transform: scale(0.96); }
+
+.sky-trigger-icon {
+  font-size: 0.85rem;
+  animation: starPulse 3s ease-in-out infinite;
+}
+
+@keyframes starPulse {
+  0%,100% { opacity: 0.7; transform: scale(1); }
+  50%     { opacity: 1;   transform: scale(1.2); }
+}
+
+/* ============================================================
+   TELA DO CÉU — overlay full-screen
+   ============================================================ */
+#sky-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  background: #010108;
+  display: flex;
+  flex-direction: column;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.04);
+  transition:
+    opacity 0.9s cubic-bezier(0.77, 0, 0.18, 1),
+    transform 0.9s cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+#sky-screen.visible {
+  opacity: 1;
+  pointer-events: all;
+  transform: scale(1);
+}
+
+/* ============================================================
+   HEADER DO CÉU
+   ============================================================ */
+.sky-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(1,1,15,0.9) 0%, transparent 100%);
+}
+
+.sky-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.sky-title-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-weight: 400;
+  font-style: italic;
+  color: #C8DCFF;
+  line-height: 1;
+}
+
+.sky-title-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(120, 160, 220, 0.7);
+}
+
+.sky-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.sky-meta-item {
+  text-align: center;
+}
+
+.sky-meta-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(100, 140, 200, 0.6);
+  font-family: 'Inter', sans-serif;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.sky-meta-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  color: rgba(180, 210, 255, 0.85);
+}
+
+.sky-close-btn {
+  background: rgba(10, 15, 50, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(80, 110, 200, 0.3);
+  color: rgba(160, 190, 240, 0.8);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1), color 0.25s;
+  flex-shrink: 0;
+}
+
+.sky-close-btn:hover {
+  background: rgba(30, 40, 100, 0.8);
+  border-color: rgba(120, 160, 255, 0.5);
+  color: #C8DCFF;
+  transform: scale(1.1) rotate(5deg);
+}
+
+.sky-close-btn svg { width: 18px; height: 18px; }
+
+/* ============================================================
+   ÁREA DO CANVAS — circular no centro
+   ============================================================ */
+.sky-canvas-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1rem 2rem;
+  position: relative;
+}
+
+#sky-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 2px;
+}
+
+/* Gradiente de vinheta em volta do círculo celeste */
+.sky-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 65% 65% at 50% 52%,
+    transparent 45%,
+    rgba(1,1,15,0.7) 75%,
+    rgba(1,1,15,0.95) 100%
+  );
+}
+
+/* ============================================================
+   PAINEL DE INFORMAÇÃO INFERIOR
+   ============================================================ */
+.sky-info-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 1.5rem 2rem 2rem;
+  background: linear-gradient(to top, rgba(1,1,15,0.95) 0%, rgba(1,1,15,0.6) 70%, transparent 100%);
+}
+
+.sky-love-message {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.sky-love-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(120, 160, 220, 0.7);
+  margin-bottom: 0.6rem;
+}
+
+.sky-love-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 2.2vw, 1.45rem);
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(200, 220, 255, 0.85);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.sky-love-quote em {
+  color: #E8D49A;
+  font-style: normal;
+}
+
+.sky-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.sky-stat {
+  text-align: center;
+  padding: 0.5rem 1rem;
+  background: rgba(15, 20, 60, 0.6);
+  border: 1px solid rgba(60, 90, 180, 0.2);
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.sky-stat:hover {
+  transform: translateY(-2px);
+  border-color: rgba(100, 140, 220, 0.4);
+}
+
+.sky-stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #C8DCFF;
+  display: block;
+  line-height: 1;
+}
+
+.sky-stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(100, 140, 200, 0.7);
+  display: block;
+  margin-top: 3px;
+}
+
+/* ============================================================
+   LEGENDA LATERAL (desktop)
+   ============================================================ */
+.sky-legend {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: rgba(5, 8, 30, 0.7);
+  border: 1px solid rgba(60, 90, 180, 0.25);
+  border-radius: 12px;
+  padding: 1rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  min-width: 130px;
+}
+
+.sky-legend-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(100, 140, 200, 0.6);
+  border-bottom: 1px solid rgba(60, 90, 180, 0.2);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.2rem;
+}
+
+.sky-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  color: rgba(160, 190, 240, 0.75);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-line {
+  width: 18px;
+  height: 1px;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+
+/* ============================================================
+   HOVER INSTRUCTION
+   ============================================================ */
+.sky-hover-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 240px);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(100, 140, 200, 0.45);
+  text-align: center;
+  pointer-events: none;
+  animation: hintFade 4s ease 2s forwards;
+}
+
+@keyframes hintFade {
+  0% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+@media (max-width: 768px) {
+  .sky-header {
+    padding: 1rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .sky-meta { gap: 0.75rem; }
+  .sky-meta-value { font-size: 0.8rem; }
+
+  .sky-legend { display: none; }
+
+  .sky-info-panel { padding: 1rem 1rem 1.5rem; }
+
+  .sky-stats { gap: 0.75rem; }
+  .sky-stat { padding: 0.4rem 0.75rem; }
+
+  .sky-canvas-area { padding: 4.5rem 0.5rem 8rem; }
+
+  .sky-trigger-btn {
+    bottom: 5.5rem;
+    font-size: 0.7rem;
+    padding: 0.65rem 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sky-love-quote { font-size: 0.92rem; }
+  .sky-title-main { font-size: 1rem; }
+  .sky-stats { gap: 0.5rem; }
+  .sky-stat-number { font-size: 1.1rem; }
+}

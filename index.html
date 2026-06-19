@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Nós. — Carlos & Elen</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/carousel.css" />
+  <link rel="stylesheet" href="css/skyscreen.css" />
+</head>
+<body>
+
+  <!-- INTRO SCREEN -->
+  <div id="intro-screen" class="intro-screen active">
+    <canvas id="stars-canvas"></canvas>
+    <div class="intro-content">
+      <div class="intro-logo">❤</div>
+      <p class="intro-quote">
+        <span class="line">"Existem milhares de fotografias</span>
+        <span class="line">no mundo.</span>
+        <span class="line">Mas algumas guardam</span>
+        <span class="line">universos inteiros."</span>
+      </p>
+      <div class="intro-names">Carlos Henrique & Elen Ambrosio</div>
+      <button class="begin-btn" id="begin-btn">
+        <span class="btn-heart">❤</span>
+        <span>Começar</span>
+      </button>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+
+  <!-- MAIN EXPERIENCE -->
+  <div id="main-experience" class="main-experience hidden">
+
+    <!-- Particles Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Music Player -->
+    <div class="music-player" id="music-player">
+      <button class="music-btn" id="music-toggle" title="Tocar/Pausar">
+        <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+      </button>
+      <div class="music-info">
+        <div class="music-title" id="music-title">Música</div>
+        <div class="music-wave">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <input type="file" id="music-file" accept="audio/*" style="display:none" />
+      <button class="music-change" id="music-change" title="Trocar música">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+      </button>
+      <audio id="audio-player" loop></audio>
+    </div>
+
+    <!-- Counter Banner -->
+    <div class="counter-banner" id="counter-banner">
+      <div class="counter-inner">
+        <div class="counter-hearts">❤</div>
+        <div class="counter-text">
+          <div class="counter-label">Feliz</div>
+          <div class="counter-number" id="counter-months">4 Meses</div>
+          <div class="counter-detail" id="counter-detail">juntos</div>
+        </div>
+        <div class="counter-days">
+          <span id="days-count">0</span>
+          <small>dias de amor</small>
+        </div>
+        <div class="counter-hearts">❤</div>
+      </div>
+    </div>
+
+    <!-- Carousel -->
+    <div class="carousel-container" id="carousel">
+
+      <!-- Navigation Arrows -->
+      <button class="nav-btn nav-prev" id="nav-prev" aria-label="Anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="nav-btn nav-next" id="nav-next" aria-label="Próximo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+
+      <!-- Slides Wrapper -->
+      <div class="slides-wrapper" id="slides-wrapper"></div>
+
+      <!-- Indicators -->
+      <div class="carousel-indicators" id="indicators"></div>
+
+      <!-- Slide Counter -->
+      <div class="slide-counter">
+        <span id="current-slide">1</span>/<span id="total-slides">1</span>
+      </div>
+    </div>
+
+    <!-- Final Screen (overlaid) -->
+    <div id="final-screen" class="final-screen hidden">
+      <canvas id="final-canvas"></canvas>
+      <div class="final-content">
+        <div class="final-flowers">🌸 🌺 🌸</div>
+        <div class="final-text">
+          <p class="final-line">"O lar não é um lugar.</p>
+          <p class="final-line">É uma pessoa.</p>
+          <p class="final-line">E eu encontrei o meu lar em você.</p>
+          <br/>
+          <p class="final-line">Obrigado por ser meu porto seguro.</p>
+          <p class="final-line">Minha paz. Meu amor.</p>
+          <br/>
+          <p class="final-line">Esse é só o começo.</p>
+          <p class="final-line">Ainda teremos muito mais.</p>
+          <br/>
+          <p class="final-line highlight">Eu te escolho todos os dias.</p>
+          <p class="final-line love">Eu te amo muitão,</p>
+          <p class="final-name">Elen Ambrosio Souza."</p>
+        </div>
+        <div class="final-signature">
+          <div class="final-hearts">❤</div>
+          <div class="final-couple">Carlos Henrique & Elen Ambrosio</div>
+          <div class="final-tagline">Uma história que ainda está sendo escrita.</div>
+          <div class="final-date" id="final-date"></div>
+        </div>
+        <button class="restart-btn" id="restart-btn">
+          <span>↩</span> Recomeçar do início
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Petals Layer -->
+  <div id="petals-layer" class="petals-layer"></div>
+  <!-- Butterflies Layer -->
+  <div id="butterflies-layer" class="butterflies-layer"></div>
+
+  <script src="js/memories.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/carousel.js"></script>
+  <script src="js/music.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/skyengine.js"></script>
+  <script src="js/skyrenderer.js"></script>
+  <script src="js/skyscreen.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+/* ============================================================
+   NÓS. — Animations & Effects Styles
+   ============================================================ */
+
+/* ============================================================
+   PETALS
+   ============================================================ */
+.petal {
+  position: absolute;
+  top: -30px;
+  pointer-events: none;
+  font-size: 1.1rem;
+  opacity: 0;
+  animation: petalFall linear forwards;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+@keyframes petalFall {
+  0%   { opacity: 0; transform: translateY(0) rotate(0deg) translateX(0px); }
+  5%   { opacity: 0.9; }
+  90%  { opacity: 0.7; }
+  100% { opacity: 0; transform: translateY(110vh) rotate(720deg) translateX(var(--drift, 40px)); }
+}
+
+/* ============================================================
+   BUTTERFLIES
+   ============================================================ */
+.butterfly {
+  position: absolute;
+  pointer-events: none;
+  font-size: 1.3rem;
+  animation: butterflyFloat linear;
+  will-change: transform;
+  opacity: 0;
+}
+
+@keyframes butterflyFloat {
+  0%   { opacity: 0; transform: translate(0, 0) rotate(0deg); }
+  10%  { opacity: 0.85; }
+  50%  { transform: translate(var(--bx, 60px), var(--by, -30px)) rotate(var(--br, 15deg)); }
+  90%  { opacity: 0.6; }
+  100% { opacity: 0; transform: translate(var(--bx2, 120px), var(--by2, 60px)) rotate(var(--br2, -10deg)); }
+}
+
+/* ============================================================
+   SPARKLE PARTICLES
+   ============================================================ */
+.sparkle-dot {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparklePop ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes sparklePop {
+  0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+  60%  { opacity: 0.8; }
+  100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+}
+
+/* ============================================================
+   GLITTER / GOLD SHIMMER ON TEXT
+   ============================================================ */
+.gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    #C9A84C 0%,
+    #F0E6C0 30%,
+    #E8D49A 50%,
+    #F0E6C0 70%,
+    #C9A84C 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: goldShimmer 3s ease-in-out infinite;
+}
+
+@keyframes goldShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================================
+   GLOW PULSE (for hearts, highlights)
+   ============================================================ */
+.glow-pulse {
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(212,120,138,0.4)); }
+  50%       { filter: drop-shadow(0 0 20px rgba(212,120,138,0.8)); }
+}
+
+/* ============================================================
+   TYPEWRITER CURSOR
+   ============================================================ */
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--gold, #C9A84C);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blinkCursor 0.8s step-end infinite;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ============================================================
+   STAR TWINKLE (for canvas-generated stars background)
+   ============================================================ */
+.star-element {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  pointer-events: none;
+  animation: starTwinkle ease-in-out infinite;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================================
+   LOVE METER / PROGRESS FILLS
+   ============================================================ */
+.love-bar-fill {
+  animation: fillUp 1.5s var(--ease-smooth, cubic-bezier(0.25,0.46,0.45,0.94)) forwards;
+}
+
+@keyframes fillUp {
+  from { width: 0%; }
+  to   { width: var(--fill-pct, 100%); }
+}
+
+/* ============================================================
+   ROSE / FLOWER BLOOM
+   ============================================================ */
+.bloom {
+  display: inline-block;
+  animation: bloomIn 0.8s var(--ease-spring, cubic-bezier(0.34,1.56,0.64,1)) forwards;
+  transform-origin: center bottom;
+}
+
+@keyframes bloomIn {
+  0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg);   opacity: 1; }
+}
+
+/* ============================================================
+   FLOATING HEARTS (CSS only)
+   ============================================================ */
+.floating-heart {
+  position: absolute;
+  pointer-events: none;
+  animation: floatHeart linear forwards;
+  opacity: 0;
+  font-size: var(--fh-size, 1.2rem);
+}
+
+@keyframes floatHeart {
+  0%   { opacity: 0; transform: translateY(0) scale(0.5); }
+  15%  { opacity: 0.9; }
+  85%  { opacity: 0.4; }
+  100% { opacity: 0; transform: translateY(-80vh) scale(0.8) rotate(var(--fh-rot, 10deg)); }
+}
+
+/* ============================================================
+   PAGE VIGNETTE (cinematic feel)
+   ============================================================ */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0,0,0,0.5) 100%
+  );
+}
+
+/* ============================================================
+   CURSOR GLOW (desktop only)
+   ============================================================ */
+.cursor-glow {
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  transition: left 0.4s ease, top 0.4s ease;
+  will-change: left, top;
+}
+
+@media (pointer: coarse) {
+  .cursor-glow { display: none; }
+}
+
+/* ============================================================
+   SCROLL INDICATOR ARROW
+   ============================================================ */
+.chevron-down {
+  display: inline-block;
+  animation: chevronBounce 2s ease-in-out infinite;
+}
+
+@keyframes chevronBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ============================================================
+   NOISE OVERLAY (film grain)
+   ============================================================ */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+}
