@@ -127,10 +127,10 @@ function buildSkyScreen() {
       <div class="sky-love-message">
         <div class="sky-love-date">✦ 22 de Fevereiro de 2026 · Maracanaú, CE ✦</div>
         <p class="sky-love-quote">
-          "Esse foi o céu que nos viu começar.<br>
+          Esse foi o céu que nos viu começar.<br>
           Cada estrela ali foi testemunha do momento<br>
           em que eu te pedi pra namorar comigo,
-          <em>Elen Ambrosio Souza.</em>"
+          <em>Elen Ambrosio Souza.</em>
         </p>
         <div class="sky-stats">
           <div class="sky-stat">
